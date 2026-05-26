@@ -114,6 +114,45 @@ void searchEmployee()
     
 }
 
+// Update Employee Function
+
+void updateEmployee()
+{
+    int updateId;
+
+    cout << "\n Enter Employee ID to Update: ";
+    cin >> updateId;
+
+    bool found = false;
+
+    for(Employee &emp : employees)
+    {
+        if(emp.id == updateId)
+        {
+            cin.ignore();
+
+            cout << "\nEnter New Name: ";
+            getline(cin, emp.name);
+
+            cout << "Enter New Designation: ";
+            getline(cin, emp.designation);
+
+            cout << "Enter New Salary: ";
+            cin >> emp.salary;
+
+            cout << "\n Employee Updated Successfully\n";
+
+            found = true;
+
+            break;
+        }
+    }
+    if(found == false)
+    {
+        cout << "\nEmployee Not Found\n";
+    }
+}
+
 
 int main()
 {

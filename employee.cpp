@@ -180,6 +180,45 @@ void deleteEmployee()
     }
 }
 
+// Save Data Function 
+void saveTOFile()
+{
+    ofstream file("employees.txt");
+
+    for(Employee emp : employees)
+    {
+        file << emp.id << ","
+            << emp.name << ","
+            << emp.designation << ","
+            << emp.salary << endl;
+    }
+    file.close();
+    cout << "\n Data Saved Successfully\n";
+}
+
+void loadFromFile()
+{
+    ifstream file("employees.txt");
+
+    Employee emp;
+
+    while(file >> emp.id)
+    {
+        file.ignore();
+
+        getline(file, emp.name, ',');
+
+        getline(file, emp.designation, ',');
+
+        file >> emp.salary;
+
+        file.ignore();
+
+        employees.push_back(emp);
+    }
+
+    file.close();
+}
 
 int main()
 {

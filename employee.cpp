@@ -82,6 +82,38 @@ void viewEmployees()
     }
 }
 
+// Search Employee
+void searchEmployee()
+{
+    int searchId;
+
+    cout << "\nEnter Employee ID to Search: ";
+    cin >> searchId;
+
+    bool found = false;
+
+    for(Employee emp : employees)
+    {
+        if(emp.id == searchId)
+        {
+            cout << "\nEmployee Found\n";
+
+            cout << "ID: " << emp.id << endl;
+            cout << "Name: " << emp.name << endl;
+            cout << "Designation: " << emp.designation << endl;
+            cout << "Salary: " << emp.salary << endl;
+
+            found = true;
+            break;
+        }
+    }
+    if (found == false)
+    {
+        cout << "\nEmployee Not Found\n";
+    }
+    
+}
+
 
 int main()
 {
@@ -89,7 +121,7 @@ int main()
 
     do
     {
-        cout << "\n =====EMPLOYEE MANAGEMENT SYSTEM =====\n";
+        cout << "\n ===== EMPLOYEE MANAGEMENT SYSTEM =====\n";
 
         cout << "1. Add Employee\n";
         cout << "2. View Employee\n";

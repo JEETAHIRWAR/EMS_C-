@@ -153,6 +153,33 @@ void updateEmployee()
     }
 }
 
+// Delete Employee Function
+void deleteEmployee()
+{
+    int deleteId;
+
+    cout << "\n Enter Employee ID to Delete: ";
+    cin >> deleteId;
+
+    bool found = false;
+
+    for(int i = 0; i < employees.size(); i++)
+    {
+        if(employees[i].id == deleteId)
+        {
+            employees.erase(employees.begin() + i);
+            cout << "\nEmployee Deleted Successfully\n";
+
+            found = true;
+            break;
+        }
+    }
+    if(found == false)
+    {
+        cout << "\nEmployee Not Found\n";
+    }
+}
+
 
 int main()
 {
@@ -164,7 +191,10 @@ int main()
 
         cout << "1. Add Employee\n";
         cout << "2. View Employee\n";
-        cout << "3. Exit \n";
+        cout << "3. Search Employee\n";
+        cout << "4. Update Employee\n";
+        cout << "5. Delete Employee\n";
+        cout << "6. Exit \n";
 
         cout << "\n Enter Choice: ";
         cin >> choice;
@@ -178,6 +208,15 @@ int main()
                 viewEmployees();
                 break;
             case 3:
+                searchEmployee();
+                break;
+            case 4:
+                updateEmployee();
+                break;
+            case 5:
+                deleteEmployee();
+                break;
+            case 6:
                 cout << "\n Thank You\n";
                 break;
             default:

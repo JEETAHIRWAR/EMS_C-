@@ -1,13 +1,14 @@
-#include<iostream>
-#include<vector>
-#include<fstream>
-#include<string>
+#include <iostream>
+#include <vector>
+#include <fstream>
+#include <string>
 
 using namespace std;
 
 class Employee
 {
 public:
+
     int id;
     string name;
     string designation;
@@ -16,42 +17,52 @@ public:
 };
 
 vector<Employee> employees;
+
 int nextId = 101;
 
-// Login System
+
+// LOGIN SYSTEM
 bool login()
 {
     string username;
     string password;
 
-    cout << "\n ========== ADMIN LOGIN ==========\n";
-    cout << "Enter Your Username:";
+    cout << "\n========== ADMIN LOGIN ==========\n";
+
+    cout << "Enter Username: ";
     cin >> username;
 
-    cout << "Enter Your Password:";
+    cout << "Enter Password: ";
     cin >> password;
 
-    if(username == "admin" && password == "admin@1234")
+    if(username == "admin" && password == "1234")
     {
-        cout << "\nLogin Successfully\n";
+        cout << "\nLogin Successful\n";
+
         return true;
     }
-    else{
-        cout << "\n Invalid Username or Password\n";
+
+    else
+    {
+        cout << "\nInvalid Username or Password\n";
+
         return false;
     }
 }
+
 
 // ADD EMPLOYEE
 void addEmployee()
 {
     Employee emp;
 
-    cout << "\nEnter Employee ID: ";
-    cin >> emp.id;
+    emp.id = nextId;
+
+    nextId++;
 
     cin.ignore();
-    cout << "Enter Name: ";
+
+    cout << "\nEnter Employee Name: ";
     getline(cin, emp.name);
 
     cout << "Enter Designation: ";
@@ -60,34 +71,56 @@ void addEmployee()
     cout << "Enter Salary: ";
     cin >> emp.salary;
 
+    cin.ignore();
+
+    cout << "Attendance (Present/Absent): ";
+    getline(cin, emp.attendance);
+
     employees.push_back(emp);
-    cout << "\n Employee Added Successfully\n";
+
+    cout << "\nEmployee Added Successfully\n";
 }
+
 
 // VIEW EMPLOYEES
 void viewEmployees()
 {
     if(employees.empty())
     {
-        cout << "\n No Employees Found\n";
+        cout << "\nNo Employees Found\n";
+
         return;
     }
-    cout << "\n ======= Employee List ======\n";
+
+    cout << "\n========== EMPLOYEE LIST ==========\n";
+
     for(Employee emp : employees)
     {
-        cout << "\nID: " << emp.id;
-        cout << "\nName: " << emp.name;
-        cout << "\nDesignation: " << emp.designation;
-        cout << "\nSalary: " << emp.salary;
+        cout << "\nEmployee ID: " << emp.id << endl;
+
+        cout << "Name: " << emp.name << endl;
+
+        cout << "Designation: "
+             << emp.designation << endl;
+
+        cout << "Salary: "
+             << emp.salary << endl;
+
+        cout << "Attendance: "
+             << emp.attendance << endl;
+
+        cout << "----------------------------------\n";
     }
 }
 
-// Search Employee
+
+// SEARCH EMPLOYEE
 void searchEmployee()
 {
     int searchId;
 
     cout << "\nEnter Employee ID to Search: ";
+
     cin >> searchId;
 
     bool found = false;
@@ -98,29 +131,41 @@ void searchEmployee()
         {
             cout << "\nEmployee Found\n";
 
-            cout << "ID: " << emp.id << endl;
-            cout << "Name: " << emp.name << endl;
-            cout << "Designation: " << emp.designation << endl;
-            cout << "Salary: " << emp.salary << endl;
+            cout << "Employee ID: "
+                 << emp.id << endl;
+
+            cout << "Name: "
+                 << emp.name << endl;
+
+            cout << "Designation: "
+                 << emp.designation << endl;
+
+            cout << "Salary: "
+                 << emp.salary << endl;
+
+            cout << "Attendance: "
+                 << emp.attendance << endl;
 
             found = true;
+
             break;
         }
     }
-    if (found == false)
+
+    if(found == false)
     {
         cout << "\nEmployee Not Found\n";
     }
-    
 }
 
-// Update Employee Function
 
+// UPDATE EMPLOYEE
 void updateEmployee()
 {
     int updateId;
 
-    cout << "\n Enter Employee ID to Update: ";
+    cout << "\nEnter Employee ID to Update: ";
+
     cin >> updateId;
 
     bool found = false;
@@ -140,25 +185,33 @@ void updateEmployee()
             cout << "Enter New Salary: ";
             cin >> emp.salary;
 
-            cout << "\n Employee Updated Successfully\n";
+            cin.ignore();
+
+            cout << "Enter Attendance: ";
+            getline(cin, emp.attendance);
+
+            cout << "\nEmployee Updated Successfully\n";
 
             found = true;
 
             break;
         }
     }
+
     if(found == false)
     {
         cout << "\nEmployee Not Found\n";
     }
 }
 
-// Delete Employee Function
+
+// DELETE EMPLOYEE
 void deleteEmployee()
 {
     int deleteId;
 
-    cout << "\n Enter Employee ID to Delete: ";
+    cout << "\nEnter Employee ID to Delete: ";
+
     cin >> deleteId;
 
     bool found = false;
@@ -168,100 +221,244 @@ void deleteEmployee()
         if(employees[i].id == deleteId)
         {
             employees.erase(employees.begin() + i);
+
             cout << "\nEmployee Deleted Successfully\n";
 
             found = true;
+
             break;
         }
     }
+
     if(found == false)
     {
         cout << "\nEmployee Not Found\n";
     }
 }
 
-// Save Data Function 
-void saveTOFile()
+
+// SALARY SLIP
+void generateSalarySlip()
+{
+    int id;
+
+    cout << "\nEnter Employee ID: ";
+
+    cin >> id;
+
+    bool found = false;
+
+    for(Employee emp : employees)
+    {
+        if(emp.id == id)
+        {
+            float bonus = emp.salary * 0.10;
+
+            float tax = emp.salary * 0.05;
+
+            float netSalary =
+                emp.salary + bonus - tax;
+
+            cout << "\n========== SALARY SLIP ==========\n";
+
+            cout << "Employee ID: "
+                 << emp.id << endl;
+
+            cout << "Name: "
+                 << emp.name << endl;
+
+            cout << "Designation: "
+                 << emp.designation << endl;
+
+            cout << "Basic Salary: "
+                 << emp.salary << endl;
+
+            cout << "Bonus: "
+                 << bonus << endl;
+
+            cout << "Tax: "
+                 << tax << endl;
+
+            cout << "Net Salary: "
+                 << netSalary << endl;
+
+            found = true;
+
+            break;
+        }
+    }
+
+    if(found == false)
+    {
+        cout << "\nEmployee Not Found\n";
+    }
+}
+
+
+// SAVE DATA
+void saveToFile()
 {
     ofstream file("employees.txt");
 
     for(Employee emp : employees)
     {
         file << emp.id << ","
-            << emp.name << ","
-            << emp.designation << ","
-            << emp.salary << endl;
+             << emp.name << ","
+             << emp.designation << ","
+             << emp.salary << ","
+             << emp.attendance << endl;
     }
+
     file.close();
-    cout << "\n Data Saved Successfully\n";
+
+    cout << "\nData Saved Successfully\n";
 }
 
+
+// LOAD DATA
 void loadFromFile()
 {
     ifstream file("employees.txt");
 
     Employee emp;
 
-    while(file >> emp.id)
+    string temp;
+
+    while(getline(file, temp, ','))
     {
-        file.ignore();
+        emp.id = stoi(temp);
 
         getline(file, emp.name, ',');
 
         getline(file, emp.designation, ',');
 
-        file >> emp.salary;
+        getline(file, temp, ',');
 
-        file.ignore();
+        emp.salary = stof(temp);
+
+        getline(file, emp.attendance);
 
         employees.push_back(emp);
+
+        if(emp.id >= nextId)
+        {
+            nextId = emp.id + 1;
+        }
     }
 
     file.close();
 }
 
+
+// MAIN FUNCTION
 int main()
 {
+    system("color 0A");
+
+    if(login() == false)
+    {
+        return 0;
+    }
+
+    loadFromFile();
+
     int choice;
 
     do
     {
-        cout << "\n ===== EMPLOYEE MANAGEMENT SYSTEM =====\n";
+        system("cls");
 
-        cout << "1. Add Employee\n";
-        cout << "2. View Employee\n";
-        cout << "3. Search Employee\n";
-        cout << "4. Update Employee\n";
-        cout << "5. Delete Employee\n";
-        cout << "6. Exit \n";
+        cout << "\n=====================================\n";
+        cout << "     EMPLOYEE MANAGEMENT SYSTEM      \n";
+        cout << "=====================================\n";
 
-        cout << "\n Enter Choice: ";
+        cout << "\n1. Add Employee";
+        cout << "\n2. View Employees";
+        cout << "\n3. Search Employee";
+        cout << "\n4. Update Employee";
+        cout << "\n5. Delete Employee";
+        cout << "\n6. Generate Salary Slip";
+        cout << "\n7. Save Data";
+        cout << "\n8. Exit";
+
+        cout << "\n\nEnter Your Choice: ";
+
         cin >> choice;
 
         switch(choice)
         {
             case 1:
+
+                system("cls");
+
                 addEmployee();
+
                 break;
+
             case 2:
+
+                system("cls");
+
                 viewEmployees();
+
                 break;
+
             case 3:
+
+                system("cls");
+
                 searchEmployee();
+
                 break;
+
             case 4:
+
+                system("cls");
+
                 updateEmployee();
+
                 break;
+
             case 5:
+
+                system("cls");
+
                 deleteEmployee();
+
                 break;
+
             case 6:
-                cout << "\n Thank You\n";
+
+                system("cls");
+
+                generateSalarySlip();
+
                 break;
+
+            case 7:
+
+                system("cls");
+
+                saveToFile();
+
+                break;
+
+            case 8:
+
+                saveToFile();
+
+                cout << "\nThank You\n";
+
+                break;
+
             default:
+
                 cout << "\nInvalid Choice\n";
         }
 
-    } while(choice != 3);
+        system("pause");
+
+    } while(choice != 8);
+
     return 0;
 }
